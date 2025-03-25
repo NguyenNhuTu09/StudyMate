@@ -5,6 +5,8 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.example.app.server.utils.Role;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,4 +25,5 @@ public class User {
     private String phoneNumber;
     private String avatar;
     private Date dateOfBirth;
+    private Role role;
 }

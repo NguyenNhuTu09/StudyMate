@@ -6,14 +6,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.app.server.entity.User;
 import com.example.app.server.entity.dto.AuthRequest;
 import com.example.app.server.entity.dto.AuthResponse;
 import com.example.app.server.entity.dto.UserDTO;
 import com.example.app.server.repository.UserRepository;
+import com.example.app.server.utils.CustomUserDetails;
 import com.example.app.server.utils.JwtUtil;
+import com.example.app.server.utils.Role;
 
 import lombok.RequiredArgsConstructor;
-import com.example.app.server.entity.User;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class AuthService {
         user.setUserName(userDTO.getUserName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-
+        user.setRole(Role.ADMIN);
         userRepository.save(user);
 
         String token = jwtUtil.generateToken(user.getUserName());
@@ -37,12 +39,15 @@ public class AuthService {
 
     public AuthResponse login(AuthRequest authRequest) {
         authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
+            new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
+        );
 
-        UserDetails userDetails = userRepository.findByUserName(authRequest.getUserName())
+        User user = userRepository.findByUserName(authRequest.getUserName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        UserDetails userDetails = new CustomUserDetails(user);
         String token = jwtUtil.generateToken(userDetails.getUsername());
+
         return new AuthResponse(token);
     }
 }
