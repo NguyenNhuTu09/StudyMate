@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+    
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
@@ -30,9 +31,17 @@ public class AuthService {
         user.setUserName(userDTO.getUserName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setRole(Role.ADMIN);
-        userRepository.save(user);
+        user.setRole(Role.USER);
+        if (userRepository.existsByUserName(userDTO.getUserName())) {
+            throw new RuntimeException("User already exists");
+        }
 
+        if(userRepository.existsByEmail(userDTO.getEmail())) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        userRepository.save(user);
+        
         String token = jwtUtil.generateToken(user.getUserName());
         return new AuthResponse(token);
     }

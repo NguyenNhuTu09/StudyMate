@@ -9,4 +9,6 @@ import com.example.app.server.entity.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
     Optional<User> findByUserName(String userName);
+    boolean existsByUserName(String userName);
+    boolean existsByEmail(String email);
 }

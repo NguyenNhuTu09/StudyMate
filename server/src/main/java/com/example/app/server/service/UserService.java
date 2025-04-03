@@ -41,19 +41,34 @@ public class UserService {
         return new UserDTO(savedUser.getId(), savedUser.getUserName(), savedUser.getEmail(), null);
     }
 
-    public UserDTO updateUser(String id, UserDTO userDTO){
-        User user = userRepository.findById(id)
+    public User updateUser(String id, User user){
+        User user_test = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("user not found"));
 
-        user.setUserName(userDTO.getUserName());
-        user.setEmail(userDTO.getEmail());
+        user_test.setUserName(user.getUserName());
+        user_test.setFullName(user.getFullName());
+        user_test.setEmail(user.getEmail());
+        user_test.setPhoneNumber(user.getPhoneNumber());
+        user_test.setDateOfBirth(user.getDateOfBirth());
+        user_test.setAvatar(user.getAvatar());
+        user_test.setEmail(user.getEmail());
 
-        if(userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()){
-            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        if(user_test.getPassword() != null && !user_test.getPassword().isEmpty()){
+            user_test.setPassword(passwordEncoder.encode(user_test.getPassword()));
         }
 
-        User updatedUser = userRepository.save(user);  
-        return new UserDTO(updatedUser.getId(), updatedUser.getUserName(), updatedUser.getEmail(), null);
+        User updatedUser = userRepository.save(user_test);  
+        return new User(updatedUser.getId(),
+                updatedUser.getFullName(), 
+                updatedUser.getUserName(), 
+                updatedUser.getPassword(), 
+                updatedUser.getEmail(),
+                updatedUser.getPhoneNumber(),
+                updatedUser.getAvatar(),
+                updatedUser.getDateOfBirth(),
+                updatedUser.getRole());
+
+
     }
 
     public void deleteUser(String id) {

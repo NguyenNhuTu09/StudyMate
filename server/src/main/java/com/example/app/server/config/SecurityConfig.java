@@ -39,19 +39,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable()) 
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() 
-                .requestMatchers(HttpMethod.POST, "/api/users").permitAll() 
-                .requestMatchers(HttpMethod.PUT, "/api/users/{id}").permitAll() 
-                .requestMatchers(HttpMethod.DELETE, "/api/users").permitAll() 
-                .requestMatchers(HttpMethod.GET, "/api/users").permitAll() 
-                .anyRequest().authenticated()
-            )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); 
+    http
+        .cors(cors -> cors.configure(http))  
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/api/auth/**", "/api/users/**").permitAll()
+            .requestMatchers(HttpMethod.PATCH, "/api/users/**").permitAll() 
+            .anyRequest().authenticated()
+        )
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        return http.build();
-    }
-    
+    return http.build();
+}
+
+
+
 }
