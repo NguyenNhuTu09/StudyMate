@@ -2,8 +2,9 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { Card, Button, TextInput } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import { FontAwesome } from "@expo/vector-icons"; // Import icon
+import { FontAwesome } from "@expo/vector-icons"; 
 
+import CustomButton01 from "../component/CustomButton01";
 const LoginScreen = () => {
   const navigation = useNavigation();
 
@@ -34,14 +35,12 @@ const LoginScreen = () => {
           />
 
           <TouchableOpacity onPress={() => console.log("Forgot Password Pressed")}>
-            <Text style={styles.forgotPassword}>Forgot Password?</Text>
+            <Text style={styles.forgotPassword} onPress={() => navigation.navigate("ForgotPassword")}>Forgot Password?</Text>
           </TouchableOpacity>
         </Card.Content>
 
         <Card.Actions style={styles.actionContainer}>
-          <Button mode="contained" onPress={() => console.log("Login Pressed")} style={styles.loginButton}>
-            Login
-          </Button>
+          <CustomButton01 title="Login" onPress={() => navigation.navigate("Main", { screen: "HomeTabs" })} />
         </Card.Actions>
 
         <View style={styles.socialContainer}>
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   card: {
-    flex: 1, // Card phủ toàn màn hình
+    flex: 1, 
     borderRadius: 8,
     elevation: 4,
     backgroundColor: "white",
@@ -90,7 +89,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "transparent",
-    marginVertical: 10, // Tăng khoảng cách giữa các input
+    marginVertical: 10, 
   },
   forgotPassword: {
     textAlign: "right",
@@ -99,11 +98,6 @@ const styles = StyleSheet.create({
   },
   actionContainer: {
     justifyContent: "center",
-  },
-  loginButton: {
-    width: "100%",
-    borderRadius: 5,
-    paddingVertical: 8,
   },
   socialContainer: {
     alignItems: "center",
