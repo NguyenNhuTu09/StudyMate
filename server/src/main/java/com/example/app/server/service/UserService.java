@@ -74,4 +74,10 @@ public class UserService {
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
+    public String extractUserId(String token){
+        String userName = extractUserId(token);
+        return userRepository.findByUserName(userName)
+            .orElseThrow(() -> new RuntimeException("User not found"))
+            .getId();
+    }
 }

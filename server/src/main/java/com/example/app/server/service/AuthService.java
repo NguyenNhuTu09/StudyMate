@@ -34,7 +34,7 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userRepository.save(user);
 
-        String token = jwtUtil.generateAccessToken(user.getUserName());
+        String token = jwtUtil.generateAccessToken(user);
         String refreshToken = jwtUtil.generateRefreshToken(user.getUserName());
 
         return new AuthResponse(token, refreshToken);
@@ -48,7 +48,7 @@ public class AuthService {
         User user = userRepository.findByUserName(authRequest.getUserName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String token = jwtUtil.generateAccessToken(authRequest.getUserName());
+        String token = jwtUtil.generateAccessToken(user);
         String refreshToken = jwtUtil.generateRefreshToken(authRequest.getUserName());
 
         return new AuthResponse(token, refreshToken);
@@ -56,8 +56,9 @@ public class AuthService {
 
     public AuthResponse refreshToken(String refreshToken) {
         String username = jwtUtil.extractUsername(refreshToken);
+        User user = userRepository.findByUserName(username).orElseThrow(() -> new RuntimeException("User not found"));
         if (username != null && !jwtUtil.isTokenExpired(refreshToken)) {
-            String newAccessToken = jwtUtil.generateAccessToken(username);
+            String newAccessToken = jwtUtil.generateAccessToken(user);
             return new AuthResponse(newAccessToken, refreshToken);
         }
         throw new RuntimeException("Refresh token is invalid or expired.");
