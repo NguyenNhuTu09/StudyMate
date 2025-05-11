@@ -67,6 +67,9 @@ const HomeScreen = () => {
           <Text style={styles.quickText}>Settings</Text>
         </TouchableOpacity>
       </View>
+      <View>
+        
+      </View>
     </View>
   );
 };

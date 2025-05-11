@@ -16,18 +16,18 @@ const LoginScreen = () => {
             uri: "https://res.cloudinary.com/dozs7ggs4/image/upload/v1743646845/149940_3609249_497358_image_v67jbi.jpg",
           }}
         />
-        <Card.Title title="Welcome to StudyMate!" titleStyle={styles.cardTitle} />
+        <Card.Title title="Chào mừng đến StudyMate" titleStyle={styles.cardTitle} />
 
-        <Card.Content>
+        <Card.Content style={{marginTop: 40}}>
           <TextInput
-            label="Username"
+            label="Tên người dùng"
             left={<TextInput.Icon icon="account" />}
             style={styles.input}
             underlineColor="black"
           />
 
           <TextInput
-            label="Password"
+            label="Mật khẩu"
             left={<TextInput.Icon icon="lock" />}
             secureTextEntry
             style={styles.input}
@@ -35,16 +35,16 @@ const LoginScreen = () => {
           />
 
           <TouchableOpacity onPress={() => console.log("Forgot Password Pressed")}>
-            <Text style={styles.forgotPassword} onPress={() => navigation.navigate("ForgotPassword")}>Forgot Password?</Text>
+            <Text style={styles.forgotPassword} onPress={() => navigation.navigate("ForgotPassword")}>Quên mật khẩu</Text>
           </TouchableOpacity>
         </Card.Content>
 
         <Card.Actions style={styles.actionContainer}>
-          <CustomButton01 title="Login" onPress={() => navigation.navigate("Main", { screen: "HomeTabs" })} />
+          <CustomButton01 title="Đăng nhập" onPress={() => navigation.navigate("Main", { screen: "HomeTabs" })} />
         </Card.Actions>
 
         <View style={styles.socialContainer}>
-          <Text style={styles.orText}>Or Login With</Text>
+          <Text style={styles.orText}>Hoặc đăng nhập với</Text>
           <View style={styles.socialButtons}>
             <TouchableOpacity style={styles.socialButton}>
               <FontAwesome name="facebook" size={24} color="#1877F2" />
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
   socialContainer: {
     alignItems: "center",
     marginVertical: 10,
+    marginTop:70,
   },
   orText: {
     marginBottom: 10,
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginVertical: 10,
+    marginTop:40,
   },
   registerText: {
     color: "#1877F2",
