@@ -46,6 +46,8 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/api/auth/**", "/api/users/**").permitAll()
             .requestMatchers("/api/subjects/**", "/api/subjects/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/study-plans/generate").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/study-plans/all").permitAll()
             .anyRequest().authenticated()
         )
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

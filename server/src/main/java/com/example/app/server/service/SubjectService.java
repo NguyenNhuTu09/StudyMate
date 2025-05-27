@@ -1,7 +1,9 @@
 package com.example.app.server.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -35,9 +37,10 @@ public class SubjectService {
         if (subjectRepository.existsByName(subject.getName())) {
             throw new IllegalArgumentException("Subject with the same name already exists");
         }
-
         try {
-            return subjectRepository.save(subject);
+            subject.setCreatedAt(LocalDate.now());
+            Subject savedSubject = subjectRepository.save(subject);
+            return savedSubject;
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("Failed to save subject due to constraint violation", e);
         }
@@ -45,7 +48,7 @@ public class SubjectService {
 
     public Subject updateSubject(String id, Subject subjectRequest, String currentUserId) {
         Subject subject = subjectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subject not found with ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Subject not     found with ID: " + id));
         
         if (!subject.getUserId().equals(currentUserId)) {
             throw new AccessDeniedException("You are not allowed to update this subject");

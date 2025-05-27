@@ -52,8 +52,6 @@ public class SubjectController {
         return ResponseEntity.ok(updatedSubject);
     }
 
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSubject(@PathVariable String id) {
         subjectService.deleteSubject(id);

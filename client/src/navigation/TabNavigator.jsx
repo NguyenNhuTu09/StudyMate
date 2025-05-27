@@ -6,6 +6,8 @@ import StudyPlanScreen from "../screens/StudyPlanScreen";
 import SubjectsScreen from "../screens/SubjectsScreen";
 import AIRecommendationsScreen from "../screens/AIRecommendationsScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import SubjectDetailScreen from "../screens/SubjectDetailScreen";
+import StudyPlanStack from "./StudyPlanStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,19 +22,20 @@ const TabNavigator = () => {
         }} 
       />
       <Tab.Screen 
-        name="StudyPlan" 
+        name="Create" 
         component={StudyPlanScreen} 
         options={{
           tabBarIcon: ({ color, size }) => <FontAwesome5 name="calendar" size={size} color={color} />,
         }} 
       />
       <Tab.Screen 
-        name="Subjects" 
-        component={SubjectsScreen} 
+        name="AllPlans" 
+        component={StudyPlanStack} 
         options={{
           tabBarIcon: ({ color, size }) => <FontAwesome5 name="book" size={size} color={color} />,
         }} 
       />
+     
       <Tab.Screen 
         name="AI" 
         component={AIRecommendationsScreen} 
